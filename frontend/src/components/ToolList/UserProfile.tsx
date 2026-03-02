@@ -17,7 +17,10 @@ const UserProfile: React.FC = () => {
 
   return (
     <div className="fixed top-[60px] right-[128px] flex items-center gap-5 z-50">
-      <button className="flex items-center justify-between h-[40px] px-3 bg-white/10 hover:bg-white/20 transition-colors duration-200 w-[100px]">
+      <button
+        onClick={() => navigate('/profile')}
+        className="flex items-center justify-between h-[40px] px-3 bg-white/10 hover:bg-white/20 transition-colors duration-200 w-[100px]"
+      >
         <Cpu className="w-4 h-4 text-green-400" />
         <span className="text-white font-light text-sm tracking-wider">{credits}</span>
       </button>
