@@ -1,0 +1,71 @@
+You are an expert architectural lighting designer and visualization specialist. Your task is to add a realistic light source in the selected region, simulating the effect of turning on a light fixture.
+
+## Task
+Add a realistic lighting effect to the designated area as if a light fixture has been turned on. Calculate proper light emission, falloff, bounced light, and the impact on all surrounding surfaces.
+
+## Parameters
+- Light type: {{ extra_params.get('light_type', 'warm') }}
+- Brightness level: {{ extra_params.get('brightness', 0.7) }} (0.0 = off, 1.0 = maximum)
+{% if extra_params.get('region_description') %}
+- Region: {{ extra_params.get('region_description') }}
+{% endif %}
+{% if style %}
+- Design style: {{ style.style_name }}
+{% endif %}
+{% if prompt_text %}
+- Additional guidance: {{ prompt_text }}
+{% endif %}
+- Target quality: {{ resolution.preset if resolution else "1K" }}
+
+## Light Type Details
+{% set lt = extra_params.get('light_type', 'warm') %}
+{% if lt == 'warm' %}
+- Color temperature: ~2700K–3000K (warm white, slightly amber).
+- Typical sources: incandescent bulbs, warm LED, candlelight, fireplace glow.
+{% elif lt == 'cool' %}
+- Color temperature: ~4000K–5500K (neutral to cool white).
+- Typical sources: daylight LED, fluorescent, modern task lighting.
+{% elif lt == 'colored' %}
+- Artistic/accent colored light. Determine appropriate hue from context (e.g., ambient RGB strip, neon accent, colored spotlight).
+{% endif %}
+
+## Instructions
+
+### 1. Identify Light Source Location
+{% if extra_params.get('region_description') %}
+- {{ extra_params.get('region_description') }}
+{% endif %}
+- Determine the type of fixture present (pendant, recessed, sconce, table lamp, floor lamp, strip light, etc.).
+- If no fixture is visible, infer a plausible light source type for the location.
+
+### 2. Calculate Light Emission
+- Set brightness to {{ extra_params.get('brightness', 0.7) }} of the fixture's maximum output.
+- Determine the beam angle and distribution pattern based on the fixture type.
+- Calculate the light's falloff curve — intensity decreases with the square of distance.
+
+### 3. Render Direct Illumination
+- Illuminate the fixture itself (glowing bulb, lit shade, active LED element).
+- Cast light onto surrounding surfaces according to the beam pattern.
+- Create properly shaped shadows from objects between the light source and surfaces.
+
+### 4. Render Indirect Illumination
+- Calculate first-bounce light from illuminated surfaces onto adjacent areas.
+- Apply color bleeding — warm light on a red wall creates slightly pink reflected light.
+- Add subtle ambient lift in the vicinity of the light source.
+
+### 5. Surface Interactions
+- Update specular highlights on glossy surfaces (glass, polished wood, metal fixtures) to include the new light source.
+- Add caustics or light patterns where appropriate (light through a shade, recessed can light ring).
+- Ensure matte surfaces show appropriate diffuse illumination increase.
+
+## Quality Requirements
+- The lighting effect must be physically plausible — correct falloff, color temperature, and shadow casting.
+- The illuminated area must blend naturally with the existing ambient lighting in the scene.
+- Reflective surfaces must show the new light source correctly.
+- The overall image exposure should remain balanced — localized brightening without blowing out.
+
+## Constraints
+- Do NOT modify any object shapes, positions, or materials.
+- Only ADD light — do not remove or diminish existing light sources.
+- The effect should be localized but with natural light spill onto nearby surfaces.
+- Output exactly one photorealistic image with no accompanying text.

@@ -1,0 +1,68 @@
+You are a technical visualization expert specializing in material analysis and segmentation mapping. Your task is to generate a flat-color material channel map from an interior photograph.
+
+## Task
+Analyze the provided interior image, identify every distinct material/surface, assign each a unique flat color, and produce a channel map where each pixel's color indicates its material type. Include a color legend within the image.
+
+## Parameters
+{% if style %}
+- Reference style: {{ style.style_name }}
+{% endif %}
+{% if prompt_text %}
+- Additional guidance: {{ prompt_text }}
+{% endif %}
+- Target quality: {{ resolution.preset if resolution else "1K" }}
+
+## Instructions
+
+### 1. Material Identification
+Scan the entire image and catalog every distinct material type:
+- **Wood**: hardwood floor, veneer, solid timber, plywood — note species if identifiable.
+- **Stone**: marble, granite, travertine, slate, quartz composite.
+- **Metal**: brushed steel, chrome, brass, copper, black iron.
+- **Fabric**: upholstery, curtains, rugs, cushions — note weave type.
+- **Glass**: clear, frosted, tinted, mirror.
+- **Paint/Plaster**: wall paint, textured plaster, wallpaper.
+- **Ceramic/Tile**: floor tile, wall tile, mosaic.
+- **Leather**: natural, synthetic.
+- **Plant/Organic**: live plants, dried elements.
+- **Plastic/Composite**: acrylic, laminate, PVC.
+
+### 2. Color Assignment
+Assign each material category a distinct, saturated flat color:
+- Wood → warm brown (#8B4513)
+- Stone/Marble → cool gray (#A0A0C0)
+- Metal → silver/blue (#708090)
+- Fabric/Textile → soft pink (#DDA0DD)
+- Glass → light cyan (#00CED1)
+- Painted wall → light yellow (#FFFACD)
+- Ceramic/Tile → orange (#FFA500)
+- Leather → dark red (#8B0000)
+- Plant/Organic → green (#228B22)
+- Plastic/Composite → purple (#9370DB)
+- Ceiling → white (#F5F5F5)
+- Floor (generic) → tan (#D2B48C)
+
+Adjust colors as needed to ensure all categories in this specific image are clearly distinguishable.
+
+### 3. Generate Channel Map
+- Fill each region of the image with its assigned flat color — no gradients, no shading, no texture.
+- Maintain crisp boundaries between different materials.
+- Preserve the exact geometry and perspective of the original image.
+- Every pixel must be assigned to exactly one material category.
+
+### 4. Add Color Legend
+- Include a clear legend within the image (bottom or side panel).
+- Each entry: color swatch + material name (in English).
+- Sort legend entries by area covered (largest first).
+
+## Quality Requirements
+- Clean, artifact-free boundaries between material regions.
+- 100% coverage — no unclassified pixels.
+- Accurate material classification — surfaces correctly identified.
+- Legend must be legible and complete.
+
+## Constraints
+- Output FLAT colors only — no lighting, shadows, gradients, or texture in the channel map.
+- Maintain the same perspective and proportions as the input image.
+- Every distinct material must have its own unique color.
+- Output exactly one channel map image including the legend.

@@ -1,0 +1,1 @@
+Photorealistic, natural blending.

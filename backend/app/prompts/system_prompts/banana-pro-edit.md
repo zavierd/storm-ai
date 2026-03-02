@@ -1,0 +1,1 @@
+Photorealistic, clean output.

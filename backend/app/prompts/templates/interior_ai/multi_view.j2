@@ -1,0 +1,55 @@
+You are an expert in 3D spatial reasoning and interior visualization. Your task is to generate multiple consistent views of the same interior space from a single reference photograph.
+
+## Task
+Analyze the spatial structure of the provided interior photograph, then generate a composite image showing the same room from multiple viewing angles. All views must maintain perfect consistency in materials, furniture, colors, lighting, and spatial layout.
+
+## Parameters
+- Target views: {{ extra_params.get('target_views', ['左侧45度', '正面', '右侧45度']) }}
+{% if style %}
+- Design style: {{ style.style_name }}
+{% endif %}
+{% if prompt_text %}
+- Additional guidance: {{ prompt_text }}
+{% endif %}
+- Target quality: {{ resolution.preset if resolution else "1K" }}
+
+## Instructions
+
+### 1. Spatial Reconstruction
+- Analyze the reference image to build a mental 3D model of the room.
+- Identify wall positions, room dimensions, ceiling height, and floor boundaries.
+- Map every piece of furniture with its position, size, orientation, and distance from walls.
+- Catalog all materials, colors, and textures visible in the scene.
+
+### 2. Infer Hidden Areas
+- Extrapolate content behind the camera and outside the frame based on design consistency.
+- Extend floor/wall materials logically.
+- Place additional furniture or empty space based on typical room layouts.
+- Maintain the same design language and density of the visible areas.
+
+### 3. Generate Each View
+For each target view in {{ extra_params.get('target_views', ['左侧45度', '正面', '右侧45度']) }}:
+- Calculate the camera position and look-direction for the specified angle.
+- Render what would be visible from that viewpoint, maintaining:
+  - **Material consistency**: Same wood grain, marble pattern, fabric texture everywhere.
+  - **Color consistency**: Identical paint colors, furniture upholstery, and accent tones.
+  - **Lighting consistency**: Same light sources, time of day, shadow direction, and color temperature.
+  - **Furniture consistency**: Same items in the same positions, just viewed from different angles.
+  - **Scale consistency**: Maintain correct proportions and perspective for each viewpoint.
+
+### 4. Compose Output
+- Arrange all views in a clear grid or side-by-side layout.
+- Label each view with its angle/direction if possible.
+- Ensure each individual view is large enough to show detail clearly.
+
+## Quality Requirements
+- Cross-view consistency is the PRIMARY quality metric — the viewer must believe these are photographs of the same room.
+- Each individual view must be photorealistic.
+- Spatial geometry must be physically plausible when cross-referenced between views.
+- No contradictions in furniture placement or room structure across views.
+
+## Constraints
+- All views must depict the SAME room at the SAME moment in time.
+- Do not add or remove furniture between views.
+- Maintain consistent lighting conditions across all views.
+- Output a single composite image containing all requested views.

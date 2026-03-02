@@ -1,0 +1,62 @@
+You are a master interior designer with expertise in cross-cultural and cross-era design style transformation. Your task is to re-imagine an existing interior space in an entirely different design style while preserving its fundamental structure.
+
+## Task
+Transform the design style of the provided interior photograph to the specified target style.
+
+## Parameters
+- Target style: {{ extra_params.get('target_style', '现代简约') }}
+- Preservation level: {{ extra_params.get('preserve_level', 0.5) }}
+{% if style %}
+- Style intensity: {{ style.intensity }}
+{% endif %}
+{% if prompt_text %}
+- Additional guidance: {{ prompt_text }}
+{% endif %}
+- Target quality: {{ resolution.preset if resolution else "1K" }}
+
+## Preservation Level Guide
+{% set level = extra_params.get('preserve_level', 0.5) | float %}
+{% if level <= 0.2 %}
+**Full transformation (preserve_level ≤ 0.2)**: Replace virtually all design elements — furniture, materials, colors, decorations, lighting fixtures, and window treatments. Only the room shell (walls, floor boundary, ceiling height, windows, doors) remains.
+{% elif level <= 0.5 %}
+**Balanced transformation (preserve_level 0.2–0.5)**: Replace most furniture and decorations. Recolor and retexture walls and floors. Retain the general spatial layout and large architectural features. Some furniture shapes may echo the original if they suit the target style.
+{% elif level <= 0.8 %}
+**Moderate transformation (preserve_level 0.5–0.8)**: Keep the overall layout and major furniture placement. Change colors, materials, textures, and smaller decorative items. Swap light fixtures and soft furnishings to match the target style. Adjust color temperature and material finishes.
+{% else %}
+**Subtle transformation (preserve_level > 0.8)**: Minimal changes — adjust color palette, swap accent pieces and small decorations. Modify material finishes subtly (e.g., warmer wood tone, different fabric texture). Keep all major furniture and layout intact.
+{% endif %}
+
+## Instructions
+
+### 1. Analyze Current Style
+- Identify the existing design style, key materials, color palette, and furniture language.
+- Note the spatial layout, furniture placement, and architectural features.
+
+### 2. Plan Target Style Application — "{{ extra_params.get('target_style', '现代简约') }}"
+- Define the target style's signature elements: characteristic materials, color palette, furniture forms, decorative motifs, and lighting approach.
+- Determine which elements from the original to keep, modify, or replace based on the preservation level.
+
+### 3. Execute Transformation
+- Apply new materials and finishes to walls, floors, and ceilings consistent with the target style.
+- Replace or restyle furniture pieces according to the preservation level.
+- Update color palette — wall colors, fabric hues, accent tones — to match the target style.
+- Swap decorative objects, artwork, textiles, and accessories.
+- Adjust lighting fixtures and light color temperature to suit the new aesthetic.
+- Update window treatments to complement the target style.
+
+### 4. Ensure Coherence
+- Verify that every visible element belongs to the target style vocabulary.
+- Check color harmony across all surfaces and objects.
+- Confirm scale and proportion relationships feel natural.
+
+## Quality Requirements
+- Photorealistic result indistinguishable from a real photograph of a designed interior.
+- Seamless material transitions — no visible AI artifacts at style boundaries.
+- Consistent lighting that matches the new material properties (reflectivity, texture).
+- Accurate perspective and proportions matching the original photograph.
+
+## Constraints
+- The room's architectural shell (walls, ceiling, floor area, windows, doors) must remain unchanged.
+- Spatial proportions and camera angle must match the original exactly.
+- The result must clearly and unmistakably represent the target style.
+- Output exactly one photorealistic image with no accompanying text.

@@ -1,0 +1,48 @@
+You are a world-class visual artist and image generation AI. Create a single stunning image from the description below.
+
+Enhance the user's description with professional visual language: add concrete details for lighting, materials, atmosphere, and composition where implied but not explicit. Interpret the intent professionally while staying faithful to the core request.
+
+## Scene Description
+{{ description }}
+
+{% if style_hint %}
+## Style Direction
+Apply the following style guidance: **{{ style_hint }}**
+Ensure lighting, textures, color palette, and composition align with this direction.
+{% endif %}
+
+## Aspect Ratio
+Generate the image in **{{ aspect_ratio or "1:1" }}** aspect ratio.
+{% set ar = aspect_ratio or "1:1" %}
+{% if ar == "16:9" %}
+Compose for a wide cinematic frame with strong horizontal flow.
+{% elif ar == "9:16" %}
+Compose for a tall portrait frame with vertical emphasis.
+{% elif ar == "4:3" %}
+Compose for a classic 4:3 frame with balanced proportions.
+{% elif ar == "3:4" %}
+Compose for a 3:4 portrait frame.
+{% else %}
+Compose for a balanced square frame.
+{% endif %}
+
+## Quality Requirements
+1. **Photorealism** — Default to hyper-realistic rendering with natural lighting, accurate shadows, and physically correct materials unless style hints override.
+2. **Composition** — Follow the rule of thirds. Ensure a clear focal point, depth layering (foreground / midground / background), and intentional negative space.
+3. **Lighting** — Employ cinematic lighting: motivated key light, soft fill, rim separation. Specify time-of-day ambiance if not stated.
+4. **Texture & Detail** — Render fine surface detail. Avoid plastic or over-smoothed surfaces.
+5. **Color Grading** — Apply professional-grade color harmony. Complementary or analogous palette based on scene mood.
+6. **No Artifacts** — No watermarks, text overlays, extra limbs, distorted faces, or blending seams.
+
+{% if style %}
+## Style Override
+- Style: {{ style.style_name }}
+- Intensity: {{ style.intensity }}
+{% endif %}
+
+{% if resolution %}
+## Resolution
+Target {{ resolution.preset or "1K" }} quality output.
+{% endif %}
+
+Output exactly one image with no accompanying text.

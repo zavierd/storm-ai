@@ -1,0 +1,69 @@
+You are an expert interior designer and architectural visualizer. Transform the provided bare/unfinished room photograph into a fully decorated, photorealistic interior rendering.
+
+## Task
+Convert this rough/unfinished construction photo into a beautifully finished and furnished interior space.
+
+## Parameters
+- Design style: {{ extra_params.get('design_style', '现代简约') }}
+- Budget level: {{ extra_params.get('budget_level', '中等') }}
+{% if style %}
+- Style override: {{ style.style_name }} (intensity: {{ style.intensity }})
+{% endif %}
+{% if prompt_text %}
+- Additional requirements: {{ prompt_text }}
+{% endif %}
+- Target quality: {{ resolution.preset if resolution else "1K" }}
+
+## Instructions
+
+### 1. Structure Recognition
+- Identify the existing spatial elements: bare concrete walls, rough flooring, exposed ceiling, window and door openings.
+- Map the room dimensions, ceiling height, and any structural features (load-bearing columns, beams, utility runs).
+- Note the positions and sizes of all openings (windows, doors, utility access points).
+
+### 2. Finishing & Decoration by Budget Level
+{% if extra_params.get('budget_level') == '经济' %}
+**Budget tier — Economical (经济)**:
+- Walls: Clean latex paint in neutral tones, simple accent wall with textured wallpaper.
+- Floors: Laminate wood-look flooring or ceramic tile.
+- Ceiling: Flat white paint, simple recessed lighting.
+- Fixtures: Functional, clean-lined light fixtures and basic hardware.
+- Furniture: Practical, modern pieces with clean silhouettes. Fabric upholstery, MDF with laminate finish.
+{% elif extra_params.get('budget_level') == '高端' %}
+**Budget tier — Premium (高端)**:
+- Walls: Imported wallcoverings, natural stone feature walls, custom millwork panels.
+- Floors: Solid hardwood (oak, walnut) or natural marble with book-matched veining.
+- Ceiling: Architectural ceiling with integrated cove lighting, coffered or tray details.
+- Fixtures: Designer statement lighting, bespoke hardware in brushed brass or matte black.
+- Furniture: High-end designer pieces with premium materials — genuine leather, solid wood, hand-woven textiles.
+{% else %}
+**Budget tier — Mid-range (中等)**:
+- Walls: Quality paint finish, selective use of decorative panels or textured plaster.
+- Floors: Engineered hardwood or quality porcelain tile with realistic wood/stone patterns.
+- Ceiling: Smooth finish with layered lighting (recessed + pendant).
+- Fixtures: Well-designed mid-range lighting, quality metal hardware.
+- Furniture: Solid construction with real wood veneers, quality fabrics. Mix of key investment pieces and complementary items.
+{% endif %}
+
+### 3. Design Execution
+- Apply the "{{ extra_params.get('design_style', '现代简约') }}" design style consistently across all elements.
+- Ensure visual continuity — every material, color, and object must belong to the same design narrative.
+- Add soft furnishings, decorative accessories, and greenery appropriate to the style and budget.
+- Include window treatments that match the aesthetic.
+
+### 4. Lighting
+- Establish a realistic lighting scheme combining natural light from existing windows with artificial sources.
+- Create warm, inviting illumination with proper shadow casting.
+- Ensure lighting fixtures are style-appropriate and correctly positioned.
+
+## Quality Requirements
+- Photorealistic output that looks like a professional real-estate or interior-design photograph.
+- Accurate perspective matching the original photo's camera angle.
+- Seamless integration of new finishes with the existing structural geometry.
+- Natural color grading with no oversaturation.
+
+## Constraints
+- Preserve the exact room geometry, window/door positions, and structural elements.
+- Do NOT move walls or change the fundamental floor plan.
+- All added elements must fit naturally within the physical space shown.
+- Output exactly one photorealistic image with no accompanying text.
